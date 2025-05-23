@@ -1,0 +1,14 @@
+# Product API Tests
+# Use the environment selector in the HTTP Client to switch between environments
+
+### Get all products
+GET http://{{host}}:{{port}}/api/products
+Accept: application/json
+
+### Get product by ID (replace 1 with the actual ID)
+GET http://{{host}}:{{port}}/api/products/1
+Accept: application/json
+
+### Get product by ID (non-existent ID to test error handling)
+GET http://{{host}}:{{port}}/api/products/999
+Accept: application/json
