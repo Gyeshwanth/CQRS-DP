@@ -184,38 +184,3 @@ Events are processed by the `ProductEventConsumer` class, which:
 3. Processes the events based on their type
 4. Updates the query database accordingly
 
-### Testing Kafka Integration
-
-A test class `ProductEventConsumerTest` is provided to test the Kafka integration. It includes tests for all event types and edge cases.
-
-## Testing with JUnit
-
-In addition to the HTTP Client, you can also test the endpoints programmatically using JUnit tests. A sample test class is provided at `src/test/java/com/yeshwanth/productquerymicroservice/controller/ProductControllerTest.java`.
-
-### Running the JUnit Tests
-
-1. Open the test class in IntelliJ IDEA
-2. Click the green "Run" button (▶️) next to the class name to run all tests
-3. Alternatively, click the green "Run" button next to individual test methods to run specific tests
-4. The test results will appear in the "Run" panel at the bottom of the IDE
-
-### Test Methods
-
-The test class includes the following test methods:
-
-1. **testGetAllProducts**
-   - Tests the endpoint to get all products
-   - Verifies that the response status is 200 OK and the response body is not null
-
-2. **testGetProductById**
-   - Tests the endpoint to get a product by ID
-   - Assumes there's a product with ID 1 in the database
-   - If the product exists, verifies that the response body is not null
-
-3. **testGetProductByIdNotFound**
-   - Tests the endpoint with a non-existent ID (999)
-   - Verifies that the response status is 404 Not Found
-
-### Debug Logging
-
-The test class includes debug logging to help you understand what's happening during the tests. Look for lines starting with `[DEBUG_LOG]` in the console output.
