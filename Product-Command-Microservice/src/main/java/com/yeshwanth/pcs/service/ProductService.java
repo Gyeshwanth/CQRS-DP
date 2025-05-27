@@ -2,7 +2,6 @@ package com.yeshwanth.pcs.service;
 
 import com.yeshwanth.pcs.config.KafkaConfig;
 import com.yeshwanth.pcs.dto.ProductEvent;
-import com.yeshwanth.pcs.dto.ProductEventDTO;
 import com.yeshwanth.pcs.dto.ProductRequest;
 import com.yeshwanth.pcs.dto.ProductResponse;
 import com.yeshwanth.pcs.model.Product;
@@ -42,13 +41,10 @@ public class ProductService {
         // Save product
         Product savedProduct = productRepository.save(product);
 
-        // Convert to DTO
-        ProductEventDTO productEventDTO = KafkaConfig.mapToProductEventDTO(savedProduct);
-
         // Create event
         ProductEvent productEvent = ProductEvent.builder()
                 .eventType(KafkaConfig.EVENT_CREATE_PRODUCT)
-                .product(productEventDTO)
+                .product(savedProduct)
                 .build();
 
         // Send to Kafka with error handling
@@ -85,13 +81,10 @@ public class ProductService {
         // Save updated product
         Product updatedProduct = productRepository.save(product);
 
-        // Convert to DTO
-        ProductEventDTO productEventDTO = KafkaConfig.mapToProductEventDTO(updatedProduct);
-
         // Create event
         ProductEvent productEvent = ProductEvent.builder()
                 .eventType(KafkaConfig.EVENT_UPDATE_PRODUCT)
-                .product(productEventDTO)
+                .product(updatedProduct)
                 .build();
 
         // Send to Kafka with error handling
@@ -126,13 +119,10 @@ public class ProductService {
         // Delete product
         productRepository.deleteById(id);
 
-        // Convert to DTO
-        ProductEventDTO productEventDTO = KafkaConfig.mapToProductEventDTO(product);
-
         // Create event
         ProductEvent productEvent = ProductEvent.builder()
                 .eventType(KafkaConfig.EVENT_DELETE_PRODUCT)
-                .product(productEventDTO)
+                .product(product)
                 .build();
 
         // Send to Kafka with error handling

@@ -2,17 +2,10 @@ spring:
   application:
     name: Product-Query-Microservice
   datasource:
-    # Local Development Configuration (uncomment for local development)
-    # url: jdbc:mysql://localhost:3306/product_query_db?createDatabaseIfNotExist=true
-    # username: root
-    # password: java
-
-    # Docker Configuration (comment out for local development)
-    url: jdbc:mysql://mysql:3306/product_query_db?createDatabaseIfNotExist=true
-    username: root
-    password: java
-
-    driver-class-name: com.mysql.cj.jdbc.Driver
+     url: jdbc:mysql://localhost:3306/product_query_db?createDatabaseIfNotExist=true
+     username: root
+     password: java
+     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,26 +14,23 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
+
   # Kafka Consumer Configuration
   kafka:
     consumer:
-      # Local Development Configuration (uncomment for local development)
-      # bootstrap-servers: localhost:9092
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
 
-      # Docker Configuration (comment out for local development)
-      bootstrap-servers: kafka:29092
-
-      group-id: product-query-group
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring:
-           json:
-              trusted:
-                  packages: com.yeshwanth.pqm.dto
-    topics:
-      product-events: product-event-topic
+          json:
+            trusted:
+              packages: '*'
+            type:
+              mapping: com.yeshwanth.pcs.dto.ProductEvent:com.yeshwanth.pqm.dto.ProductEvent
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
 
 
 server:
@@ -52,6 +42,3 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
-    operationsSorter: method
-    tagsSorter: alpha
-  packages-to-scan: com.yeshwanth.pqm.controller

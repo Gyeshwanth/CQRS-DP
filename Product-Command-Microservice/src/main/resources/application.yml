@@ -2,36 +2,11 @@ spring:
   application:
     name: Product-Command-Microservice
 
-  # ===== LOCAL DEVELOPMENT CONFIGURATION =====
-  # Keep these uncommented for local development
-# datasource:
-#    url: jdbc:mysql://localhost:3306/product_command_db?createDatabaseIfNotExist=true
-#    username: root
-#    password: java
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-
-#  # Kafka Producer Configuration for local development
-# kafka:
-#    producer:
-#      bootstrap-servers: localhost:9092
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
-  # ===== DOCKER DEPLOYMENT CONFIGURATION =====
-  # Uncomment these and comment out the above sections when deploying with Docker
   datasource:
-     url: jdbc:mysql://mysql:3306/product_command_db?createDatabaseIfNotExist=true
-     username: root
-     password: java
-     driver-class-name: com.mysql.cj.jdbc.Driver
-
-  # Kafka Producer Configuration for Docker deployment
-  kafka:
-     producer:
-       bootstrap-servers: kafka:9092
-       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
+    url: jdbc:mysql://localhost:3306/product_command_db?createDatabaseIfNotExist=true
+    username: root
+    password: java
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -41,15 +16,21 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
+#   Kafka Producer Configuration for local development
+  kafka:
+   producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
+
 # OpenAPI Configuration
 springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
-    operationsSorter: method
-    tagsSorter: alpha
-    disable-swagger-default-url: true
 
 server:
   port: 8081

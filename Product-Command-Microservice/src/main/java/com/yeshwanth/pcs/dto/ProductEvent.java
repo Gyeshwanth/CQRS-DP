@@ -1,5 +1,6 @@
 package com.yeshwanth.pcs.dto;
 
+import com.yeshwanth.pcs.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class ProductEvent {
 
     private String eventType;
-    private ProductEventDTO product;
+    private Product product;
 }
